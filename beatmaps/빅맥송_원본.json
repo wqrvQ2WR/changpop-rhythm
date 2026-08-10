@@ -1,0 +1,81 @@
+{
+  "song": "빅맥송 원본.mp3",
+  "bpm": 90,
+  "offset": 0.667,
+  "total_notes": 16,
+  "duration": 9.3,
+  "lanes": 4,
+  "lanes_keys": [
+    "D",
+    "F",
+    "J",
+    "K"
+  ],
+  "difficulty": "매우어려움",
+  "notes": [
+    {
+      "time": 1.334,
+      "lane": 1
+    },
+    {
+      "time": 1.667,
+      "lane": 2
+    },
+    {
+      "time": 2.0,
+      "lane": 2
+    },
+    {
+      "time": 2.667,
+      "lane": 1
+    },
+    {
+      "time": 3.0,
+      "lane": 3
+    },
+    {
+      "time": 3.334,
+      "lane": 1
+    },
+    {
+      "time": 3.334,
+      "lane": 3
+    },
+    {
+      "time": 3.667,
+      "lane": 1
+    },
+    {
+      "time": 4.334,
+      "lane": 3
+    },
+    {
+      "time": 5.334,
+      "lane": 1
+    },
+    {
+      "time": 5.667,
+      "lane": 0
+    },
+    {
+      "time": 5.667,
+      "lane": 2
+    },
+    {
+      "time": 6.0,
+      "lane": 0
+    },
+    {
+      "time": 7.0,
+      "lane": 3
+    },
+    {
+      "time": 8.667,
+      "lane": 1
+    },
+    {
+      "time": 8.667,
+      "lane": 3
+    }
+  ]
+}

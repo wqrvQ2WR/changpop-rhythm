@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>창팝 리듬게임 🎵</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:#0a0a0f;color:#fff;
+  font-family:'Noto Sans KR',sans-serif;
+  overflow:hidden;height:100vh;user-select:none;-webkit-user-select:none
+}
+
+#game-container{position:relative;z-index:1;width:100%;height:100vh;display:flex;flex-direction:column;align-items:center}
+
+/* START SCREEN */
+#start-screen{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;background:rgba(10,10,15,0.97);padding:20px;overflow-y:auto}
+#start-screen h1{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#ff6b6b);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rainbow 3s ease infinite;margin-bottom:0.3rem}
+@keyframes rainbow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+#start-screen .subtitle{color:#888;margin-bottom:1.5rem;font-size:0.95rem}
+
+.song-list{width:100%;max-width:420px;margin-bottom:1rem}
+.song-list-title{font-size:0.8rem;color:#666;margin-bottom:6px;text-transform:uppercase}
+.song-item{display:flex;align-items:center;padding:10px 14px;margin-bottom:4px;border-radius:10px;background:rgba(255,255,255,0.04);cursor:pointer;transition:all 0.15s;gap:10px;border:1px solid transparent}
+.song-item:hover{background:rgba(255,255,255,0.08)}
+.song-item.selected{background:rgba(255,255,255,0.1);border-color:rgba(255,215,61,0.4)}
+.song-item .name{flex:1;font-size:0.95rem;font-weight:500}
+.song-item .meta{font-size:0.7rem;color:#666}
+.song-item .meta .diff-easy{color:#6bcb77}
+.song-item .meta .diff-normal{color:#4d96ff}
+.song-item .meta .diff-hard{color:#ffd93d}
+.song-item .meta .diff-insane{color:#ff6b6b}
+.song-item .meta .diff-extreme{color:#ff44ff}
+.song-item .check{color:#ffd93d;font-size:1.1rem}
+
+.key-guide{display:flex;gap:16px;margin-top:1rem}
+.key-guide-item{text-align:center}
+.key-guide-item .key{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:8px;font-weight:700;font-size:1.1rem;margin-bottom:2px}
+.key-guide-item .label{font-size:0.7rem;color:#666}
+
+.btn{padding:12px 40px;font-size:1.2rem;font-weight:700;border:none;border-radius:10px;cursor:pointer;background:linear-gradient(135deg,#ff6b6b,#ffd93d);color:#000;transition:all 0.15s;font-family:'Noto Sans KR',sans-serif}
+.btn:hover{transform:scale(1.04);box-shadow:0 0 25px rgba(255,107,107,0.3)}
+.btn-small{padding:6px 14px;font-size:0.8rem}
+.btn-upload{margin-top:10px;background:rgba(255,255,255,0.1);color:#ccc;padding:10px 20px;font-size:0.85rem}
+
+#file-input{display:none}
+
+/* GAME UI */
+#game-ui{display:none;width:100%;height:100%;position:relative}
+#hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:12px 16px;z-index:5}
+#hud-left .score{font-size:1.8rem;font-weight:900}
+#hud-left .song-title{font-size:0.8rem;color:#888}
+#hud-center .combo{font-size:1.4rem;font-weight:700;color:#ffd93d;text-align:center;min-width:80px}
+#hud-right{text-align:right;font-size:0.7rem;color:#666}
+#hud-right .offset-label{color:#888}
+#progress-container{position:absolute;top:58px;left:12px;right:12px;height:2px;background:rgba(255,255,255,0.08);border-radius:2px;z-index:5}
+#progress-bar{height:100%;background:linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcb77);border-radius:2px;width:0%;transition:width 0.05s linear}
+
+/* SKIN BUTTON */
+#skin-btn{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:6;background:rgba(255,255,255,0.08);border:none;color:#888;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.75rem;font-family:inherit;transition:all 0.15s}
+#skin-btn:hover{background:rgba(255,255,255,0.15);color:#fff}
+
+/* QUIT BUTTON */
+#quit-btn{position:absolute;top:70px;right:12px;z-index:6;background:rgba(255,107,107,0.15);border:none;color:#ff9a9a;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.75rem;font-family:inherit;transition:all 0.15s}
+#quit-btn:hover{background:rgba(255,107,107,0.35);color:#fff}
+
+/* PLAY AREA */
+#play-area{position:absolute;top:68px;bottom:0;left:50%;transform:translateX(-50%);width:480px;display:flex;justify-content:center}
+.lane{flex:1;position:relative;border-left:1px solid rgba(255,255,255,0.04);border-right:1px solid rgba(255,255,255,0.04)}
+.lane:nth-child(1){--lane-color:#ff6b6b}
+.lane:nth-child(2){--lane-color:#ffd93d}
+.lane:nth-child(3){--lane-color:#6bcb77}
+.lane:nth-child(4){--lane-color:#4d96ff}
+
+.judgment-line{position:absolute;bottom:80px;left:0;right:0;height:2px;background:rgba(255,255,255,0.4);z-index:3}
+.judgment-line::after{content:'';position:absolute;top:-10px;left:0;right:0;height:22px;background:linear-gradient(to top,rgba(255,255,255,0.08),transparent)}
+
+/* NOTES */
+.note{position:absolute;width:80%;left:10%;z-index:2}
+.note .note-inner{width:100%;height:100%;border-radius:4px;position:relative;overflow:hidden}
+
+/* short note */
+.note.short{height:20px}
+.note.short .note-inner{background:var(--lane-color);box-shadow:0 0 10px var(--lane-color)}
+
+/* long note */
+.note.long .note-inner{background:linear-gradient(180deg,var(--lane-color),rgba(255,255,255,0.2) 50%,var(--lane-color));box-shadow:0 0 8px var(--lane-color);border:1px solid var(--lane-color)}
+.note.long .note-inner::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 8px,rgba(255,255,255,0.1) 8px,rgba(255,255,255,0.1) 9px)}
+.note.long.held .note-inner{background:var(--lane-color);border-color:#fff}
+
+/* hit effects */
+.note.hit-anim{animation:note-hit 0.2s ease forwards}
+@keyframes note-hit{0%{transform:scale(1);opacity:1}100%{transform:scale(1.3);opacity:0}}
+
+/* NOTE SKINS */
+/* skin 2 - diamond */
+.skin-2 .note.short .note-inner{border-radius:0;transform:rotate(45deg);width:70%;height:70%;margin:15%}
+.skin-2 .note.long .note-inner{border-radius:4px;border-style:dashed}
+/* skin 3 - glow */
+.skin-3 .note.short .note-inner{border-radius:50%;box-shadow:0 0 20px var(--lane-color),0 0 40px var(--lane-color)}
+.skin-3 .note.long .note-inner{border-radius:8px;box-shadow:0 0 15px var(--lane-color)}
+/* skin 4 - minimal */
+.skin-4 .note.short .note-inner{border-radius:2px;box-shadow:none;opacity:0.8}
+.skin-4 .note.long .note-inner{box-shadow:none;opacity:0.8;border:1px solid rgba(255,255,255,0.3)}
+/* skin 5 - circle */
+.skin-5 .note.short .note-inner{width:34px;height:34px;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.85),var(--lane-color) 65%);border:2px solid rgba(255,255,255,0.9);box-shadow:0 0 14px var(--lane-color)}
+.skin-5 .note.long .note-inner{border-radius:20px;border:2px solid #fff}
+
+.lane-flash{position:absolute;top:0;left:0;right:0;bottom:0;opacity:0;pointer-events:none;z-index:4;transition:opacity 0.08s}
+.lane-flash.active{opacity:0.25}
+
+#judgment-popup{position:absolute;bottom:130px;left:50%;transform:translateX(-50%);font-size:1.8rem;font-weight:900;z-index:7;pointer-events:none;opacity:0;transition:opacity 0.08s}
+#judgment-popup.show{opacity:1}
+#judgment-popup.perfect{color:#ffd93d;text-shadow:0 0 30px #ffd93d}
+#judgment-popup.great{color:#6bcb77;text-shadow:0 0 20px #6bcb77}
+#judgment-popup.good{color:#4d96ff;text-shadow:0 0 15px #4d96ff}
+#judgment-popup.miss{color:#ff6b6b;text-shadow:0 0 20px #ff6b6b}
+
+/* TOUCH KEYS */
+#touch-keys{display:none;position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:480px;height:80px;z-index:6}
+.touch-key{flex:1;height:100%;margin:2px;border-radius:8px;opacity:0.35;transition:opacity 0.08s;border:1px solid rgba(255,255,255,0.15)}
+.touch-key.pressed{opacity:0.8}
+.touch-key:nth-child(1){background:#ff6b6b}
+.touch-key:nth-child(2){background:#ffd93d}
+.touch-key:nth-child(3){background:#6bcb77}
+.touch-key:nth-child(4){background:#4d96ff}
+@media (pointer:coarse){#touch-keys{display:flex}}
+
+/* RESULT */
+#result-screen{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;background:rgba(10,10,15,0.96)}
+#result-screen h2{font-size:2rem;margin-bottom:1rem}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;margin-bottom:2rem}
+.result-item{text-align:center;padding:10px 20px;background:rgba(255,255,255,0.04);border-radius:10px}
+.result-item .rv{font-size:1.8rem;font-weight:900}
+.result-item .rl{font-size:0.75rem;color:#888}
+.grade{font-size:5rem;font-weight:900;margin-bottom:0.5rem}
+.grade-S{color:#ffd93d;text-shadow:0 0 40px #ffd93d}
+.grade-A{color:#6bcb77;text-shadow:0 0 30px #6bcb77}
+.grade-B{color:#4d96ff;text-shadow:0 0 30px #4d96ff}
+.grade-C{color:#ff6b6b;text-shadow:0 0 20px #ff6b6b}
+.grade-F{color:#f44;text-shadow:0 0 15px #f44}
+#result-screen .song-info-result{color:#666;font-size:0.85rem;margin-bottom:1.2rem}
+#result-screen .btn-group{display:flex;gap:10px}
+
+@media(max-width:520px){#play-area{width:100%}#start-screen h1{font-size:2.5rem}#hud-left .score{font-size:1.3rem}#touch-keys{width:100%}}
+</style>
+</head>
+<body>
+
+<div id="game-container">
+  <!-- START SCREEN -->
+  <div id="start-screen">
+    <h1>🎵 창팝 리듬</h1>
+    <div class="subtitle">똥 밟았네 뮤직비디오 풀버전</div>
+
+    <div class="song-list" id="song-list-container" style="display:none">
+      <div class="song-list-title">🎶 곡 선택</div>
+      <div id="song-list" style="max-height:220px;overflow-y:auto"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+      <button class="btn" id="start-btn">▶ 게임 시작</button>
+      <button class="btn btn-small" id="song-select-btn" style="background:rgba(255,255,255,0.08);color:#ccc">🎶 곡선택</button>
+      <button class="btn btn-small" id="speed-btn" style="background:rgba(255,255,255,0.08);color:#ccc">⚡ 속도</button>
+      <button class="btn btn-small" id="diff-btn" style="background:rgba(255,255,255,0.08);color:#ccc">💀 난이도</button>
+      <button class="btn btn-small" id="skin-select-btn" style="background:rgba(255,255,255,0.08);color:#ccc">🎨 노트</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <label class="btn btn-small btn-upload" id="upload-label" style="flex:1">📁 MP3 업로드<input type="file" id="file-input" accept="audio/mpeg,audio/mp3"></label>
+      <button class="btn btn-small" id="keybind-btn" style="flex:1;background:rgba(255,255,255,0.1);color:#ccc">⌨ 키설정</button>
+    </div>
+
+    <div class="key-guide" id="key-guide">
+      <div class="key-guide-item"><div class="key" style="background:#ff6b6b;color:#000">D</div><div class="label">1P</div></div>
+      <div class="key-guide-item"><div class="key" style="background:#ffd93d;color:#000">F</div><div class="label">2P</div></div>
+      <div class="key-guide-item"><div class="key" style="background:#6bcb77;color:#000">J</div><div class="label">3P</div></div>
+      <div class="key-guide-item"><div class="key" style="background:#4d96ff;color:#000">K</div><div class="label">4P</div></div>
+    </div>
+  </div>
+
+  <!-- KEYBIND MODAL -->
+  <div id="keybind-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:20;background:rgba(0,0,0,0.8);align-items:center;justify-content:center">
+    <div style="background:#1a1a24;border-radius:16px;padding:24px;max-width:360px;width:90%">
+      <h3 style="margin-bottom:16px;font-size:1.2rem">⌨ 키 설정</h3>
+      <div id="keybind-list"></div>
+      <div style="font-size:0.75rem;color:#666;margin-top:12px">원하는 키를 누르면 변경됩니다</div>
+      <button class="btn btn-small" id="keybind-close" style="margin-top:12px;width:100%;background:rgba(255,255,255,0.1);color:#ccc;padding:10px">닫기</button>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div id="game-ui">
+    <button id="skin-btn">🎨 | 기본</button>
+    <button id="quit-btn">✕ 나가기</button>
+    <div id="hud">
+      <div id="hud-left">
+        <div class="score" id="score">0</div>
+        <div class="song-title" id="song-title">-</div>
+      </div>
+      <div id="hud-center">
+        <div class="combo" id="combo-display"></div>
+      </div>
+      <div id="hud-right">
+        <div style="font-size:0.7rem;color:#555">⚡<span id="speed-display">1.0x</span> | <span class="offset-label" id="offset-display">+0ms</span></div>
+        <div style="font-size:0.6rem;color:#444;margin-top:1px" id="timing-debug"></div>
+        <div style="font-size:0.6rem;color:#444">[ ]오프셋 &lt;&gt;속도</div>
+      </div>
+    </div>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+    <div id="play-area">
+      <div class="lane" id="lane-0"><div class="lane-flash" id="flash-0"></div></div>
+      <div class="lane" id="lane-1"><div class="lane-flash" id="flash-1"></div></div>
+      <div class="lane" id="lane-2"><div class="lane-flash" id="flash-2"></div></div>
+      <div class="lane" id="lane-3"><div class="lane-flash" id="flash-3"></div></div>
+      <div class="judgment-line"></div>
+    </div>
+    <div id="judgment-popup"></div>
+    <div id="touch-keys"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result-screen">
+    <div class="grade" id="grade">S</div>
+    <h2 id="result-title">🎉</h2>
+    <div class="song-info-result" id="result-song-name">-</div>
+    <div class="result-grid">
+      <div class="result-item"><div class="rv" id="r-score">0</div><div class="rl">SCORE</div></div>
+      <div class="result-item"><div class="rv" id="r-combo">0</div><div class="rl">MAX COMBO</div></div>
+      <div class="result-item"><div class="rv" id="r-perfect" style="color:#ffd93d">0</div><div class="rl">PERFECT</div></div>
+      <div class="result-item"><div class="rv" id="r-miss" style="color:#ff6b6b">0</div><div class="rl">MISS</div></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn" id="retry-btn">🔄 다시하기</button>
+      <button class="btn btn-small" id="menu-btn" style="background:rgba(255,255,255,0.1);color:#ccc">🏠 메뉴</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 경로 프록시(/rhythm)에서 슬래시 없이 접근하면 상대경로가 깨짐 → 슬래시 붙여 리다이렉트
+if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))
+  location.replace(location.pathname+'/'+location.search+location.hash);
+
+// ===== PREDEFINED SONGS =====
+const SONGS = [
+  {name:"a_hisa - Fizzy Pixel", file:"songs/a_hisa - Fizzy Pixel.mp3", bm:"beatmaps/a_hisa_-_Fizzy_Pixel.json"},
+  {name:"a_hisa - Da-Di-Du Donut", file:"songs/a_hisa - Da-Di-Du Donut.mp3", bm:"beatmaps/a_hisa_-_Da-Di-Du_Donut.json"},
+  {name:"a_hisa - Mint Parfait", file:"songs/a_hisa - Mint Parfait.mp3", bm:"beatmaps/a_hisa_-_Mint_Parfait.json"},
+  {name:"a_hisa - Smoked Turkey Rag", file:"songs/a_hisa - Smoked Turkey Rag.mp3", bm:"beatmaps/a_hisa_-_Smoked_Turkey_Rag.json"},
+  {name:"MEGALOVANIA", file:"songs/MEGALOVANIA.mp3", bm:"beatmaps/MEGALOVANIA.json"},
+  {name:"BIG SHOT (DELTARUNE)", file:"songs/BIG SHOT (DELTARUNE).mp3", bm:"beatmaps/BIG_SHOT__DELTARUNE_.json"},
+  {name:"Warak - 끝까지 걸어가고 싶어", file:"songs/Warak - 끝까지 걸어가고 싶어.mp3", bm:"beatmaps/Warak_-_끝까지_걸어가고_싶어.json"},
+  {name:"창팝을 고소하라고 즐기면 되잖아", file:"songs/창팝을 고소하라고 즐기면 되잖아.mp3", bm:"beatmaps/창팝을_고소하라고_즐기면_되잖아.json"},
+  {name:"내 이름은 김근육", file:"songs/내 이름은 김근육.mp3", bm:"beatmaps/내_이름은_김근육.json"},
+  {name:"빅맥송 원본", file:"songs/빅맥송 원본.mp3", bm:"beatmaps/빅맥송_원본.json"},
+  {name:"마쁘리(APT)", file:"songs/마쁘리(APT).mp3", bm:"beatmaps/마쁘리APT.json"},
+  {name:"카톡팝 - 카카오는 이제 가난하다고", file:"songs/카톡팝 - 카카오는 이제 가난하다고.mp3", bm:"beatmaps/카톡팝_-_카카오는_이제_가난하다고.json"},
+  {name:"이마트송", file:"songs/이마트송.mp3", bm:"beatmaps/이마트송.json"},
+  {name:"다 해줬잖아", file:"songs/다 해줬잖아.mp3", bm:"beatmaps/다_해줬잖아.json"},
+  {name:"모차르트 힙합 비트", file:"songs/모차르트 힙합 비트.mp3", bm:"beatmaps/모차르트_힙합_비트.json"},
+  {name:"쌀 다 팜", file:"songs/쌀 다 팜.mp3", bm:"beatmaps/쌀_다_팜.json"},
+  {name:"홍다빈 - .KR", file:"songs/홍다빈 - .KR.mp3", bm:"beatmaps/홍다빈_-_.KR.json"},
+];
+
+let LANE_KEYS = JSON.parse(localStorage.getItem('rhythm_keys')) || ['d','f','j','k'];
+const NOTE_SKINS = ['기본','다이아','글로우','미니멀','서클'];
+const DIFF_MODES = ['쉬움','보통','어려움','매운맛🌶️'];
+let diffMode = +(localStorage.getItem('rhythm_diff') ?? 1);
+
+let audioCtx, audioBuffer, source, gainNode;
+let beatmap=null, notes=[];
+let score=0, combo=0, maxCombo=0;
+let judgements={perfect:0,great:0,good:0,miss:0};
+let isPlaying=false, startTime=0;
+let animFrameId=null, keyState={}, globalOffset=0, noteSpeed=400, skinIdx=+(localStorage.getItem('rhythm_skin')||0);
+let selectedSong=0, isUploaded=false;
+let holdNotes={}; // lane -> {noteId, heldTime}
+
+const el={};
+function qs(s){return document.querySelector(s)}
+function qsa(s){return document.querySelectorAll(s)}
+function byId(s){return document.getElementById(s)}
+function fmtTime(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec}
+
+// init DOM refs (HTML kebab-id → JS camelCase 매핑)
+const ID_MAP = {
+  startScreen:'start-screen', gameUI:'game-ui', resultScreen:'result-screen',
+  startBtn:'start-btn', retryBtn:'retry-btn', fileInput:'file-input',
+  songList:'song-list', score:'score', combo:'combo-display',
+  progress:'progress-bar', songTitle:'song-title', judgment:'judgment-popup',
+  offsetDisplay:'offset-display', skinBtn:'skin-btn',
+  grade:'grade', resultTitle:'result-title', resultSongName:'result-song-name',
+  rScore:'r-score', rCombo:'r-combo', rPerfect:'r-perfect', rMiss:'r-miss',
+  playArea:'play-area', touchKeys:'touch-keys', menuBtn:'menu-btn'
+};
+for(const [key,id] of Object.entries(ID_MAP)){el[key]=byId(id)}
+el.lanes=[0,1,2,3].map(i=>byId(`lane-${i}`));
+el.flashes=[0,1,2,3].map(i=>byId(`flash-${i}`));
+
+// ===== SONG LIST =====
+function renderSongList(){
+  el.songList.innerHTML=SONGS.map((s,i)=>{
+    const bm=beatmapCache[s.bm];
+    const meta=bm?`${bm.bpm}BPM · ${fmtTime(bm.duration)}`:'...';
+    const diff=bm?.difficulty||'';
+    const diffClass={'쉬움':'easy','보통':'normal','어려움':'hard','매우어려움':'insane','극악':'extreme'}[diff]||'';
+    return `
+    <div class="song-item ${i===selectedSong?'selected':''}" data-idx="${i}">
+      <div class="name">${s.name}</div>
+      <div class="meta">${meta} · <span class="diff-${diffClass}">${diff}</span></div>
+      <div class="check">${i===selectedSong?'✓':''}</div>
+    </div>`;
+  }).join('');
+  el.songList.querySelectorAll('.song-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      selectedSong=parseInt(el.dataset.idx);
+      isUploaded=!SONGS[selectedSong].file; // 업로드 곡(file='')이면 업로드 버퍼 사용
+      audioBuffer=null;beatmap=null; // 곡 변경 → 이전 곡 오디오/채보 버리고 다시 로드
+      renderSongList();
+      document.getElementById('song-list-container').style.display='none';
+    });
+  });
+}
+
+// ===== BEATMAP CACHE =====
+const beatmapCache={};
+
+async function loadBeatmap(){
+  if(isUploaded && window.uploadedBeatmap){beatmap=window.uploadedBeatmap;return}
+  const song=SONGS[selectedSong];
+  if(beatmapCache[song.bm]){beatmap=beatmapCache[song.bm];return}
+  const r=await fetch(song.bm);
+  beatmap=await r.json();
+  beatmapCache[song.bm]=beatmap;
+  renderSongList(); // reload 시 리스트 업데이트
+}
+
+// ===== AUDIO =====
+async function loadAudio(){
+  const song=SONGS[selectedSong];
+  audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(isUploaded && window.uploadedAudioBuffer){audioBuffer=window.uploadedAudioBuffer;return}
+  const r=await fetch(song.file);
+  audioBuffer=await audioCtx.decodeAudioData(await r.arrayBuffer());
+}
+
+// ===== UPLOAD =====
+el.fileInput.addEventListener('change',async(e)=>{
+  const file=e.target.files[0];
+  if(!file)return;
+  try{
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    audioBuffer=await audioCtx.decodeAudioData(await file.arrayBuffer());
+    window.uploadedAudioBuffer=audioBuffer;
+
+    // client-side beat detection
+    const bm=await detectBeats(audioBuffer,file.name);
+    window.uploadedBeatmap=bm;
+    isUploaded=true;
+    selectedSong=SONGS.length;
+
+    // add to song list temporarily
+    SONGS.push({name:file.name.replace('.mp3',''),file:'',bm:''});
+    renderSongList();
+    document.querySelector('.song-item:last-child')?.scrollIntoView();
+
+    el.songTitle.textContent=file.name.replace('.mp3','');
+    document.getElementById('start-btn').textContent='▶ 게임 시작';
+  }catch(err){alert('업로드 실패: '+err.message)}
+});
+
+// ===== CLIENT-SIDE BEAT DETECTION =====
+function detectBeats(buf,fname){
+  return new Promise(resolve=>{
+    const ch=buf.getChannelData(0);
+    const sr=buf.sampleRate;
+    const ds=Math.floor(sr/100); // 100Hz envelope
+    const env=[];
+    for(let i=0;i<ch.length-ds;i+=ds){
+      let sum=0;
+      for(let j=0;j<ds;j++)sum+=ch[i+j]*ch[i+j];
+      env.push(Math.sqrt(sum/ds));
+    }
+
+    // onsets
+    const onsets=[];
+    for(let i=2;i<env.length-2;i++){
+      if(env[i]>env[i-1]*1.5&&env[i]>=Math.max(env[i-1],env[i+1])&&env[i]>Math.max(...env)*0.01){
+        const t=i*ds/sr;
+        if(!onsets.length||t-onsets[onsets.length-1]>0.06)onsets.push(t);
+      }
+    }
+
+    // BPM
+    const intervals=[];
+    for(let i=0;i<Math.min(onsets.length,300);i++){
+      for(let j=i+1;j<Math.min(i+30,onsets.length);j++){
+        const d=onsets[j]-onsets[i];
+        if(d>0.15&&d<2.0)intervals.push(d);
+      }
+    }
+    const hist={};
+    intervals.forEach(iv=>{const bk=Math.round(iv*100);hist[bk]=(hist[bk]||0)+1});
+    const bestIv=Object.entries(hist).sort((a,b)=>b[1]-a[1])[0];
+    let bpm=bestIv?Math.round(60/(parseInt(bestIv[0])/100)):120;
+    const common=[60,70,75,80,85,90,95,100,105,110,115,120,125,128,130,135,140,145,150,155,160,170,175,180,190,200];
+    bpm=common.reduce((a,x)=>Math.abs(x-bpm)<Math.abs(a-bpm)?x:a);
+    const bi=60/bpm;
+
+    const firstBeat=onsets.length?Math.round(onsets[0]/bi)*bi:0.5;
+    const patterns=[[0,2,1,3],[0,1,2,3],[3,2,1,0],[0,3,1,2],[2,0,3,1],[1,3,0,2]];
+    const rawNotes=[];
+    let t=firstBeat,cnt=0,dur=buf.duration-0.5;
+
+    while(t<dur){
+      if(t<0.6){t+=bi;continue}
+      const be=Math.round((t-firstBeat)/bi)%8;
+      const ps=Math.floor((t-firstBeat)/bi/32)%patterns.length;
+      const p=patterns[ps];
+      let lane;
+      if(be===0)lane=p[0];
+      else if(be===2)lane=p[1];
+      else if(be===4)lane=p[2];
+      else if(be===6)lane=p[3];
+      else if(cnt%3===0&&[1,3,5,7].includes(be))lane=p[be%4];
+      else{t+=bi;continue}
+      rawNotes.push([Math.round(t*1000)/1000,lane]);
+      cnt++;t+=bi;
+    }
+
+    // long notes
+    const notes=[];
+    for(let i=0;i<rawNotes.length;){
+      const[t,l]=rawNotes[i];let j=i+1;
+      while(j<rawNotes.length&&rawNotes[j][1]===l&&rawNotes[j][0]-rawNotes[j-1][0]<=bi*1.5)j++;
+      if(j-i>=3){
+        const dur=rawNotes[j-1][0]+bi*0.5-t;
+        notes.push({time:t,lane:l,type:'long',duration:Math.round(dur*1000)/1000});
+        i=j;
+      }else{notes.push({time:t,lane:l});i++}
+    }
+
+    const bm={
+      song:fname, bpm, offset:firstBeat,
+      total_notes:notes.length, duration:Math.round(dur*10)/10,
+      lanes:4, lanes_keys:["D","F","J","K"], notes
+    };
+    resolve(bm);
+  });
+}
+
+// ===== DIFFICULTY =====
+// 채보는 '어려움' 기준 풀 노트(동시치기 포함) → 보통/쉬움은 여기서 솎아냄
+function applyDifficulty(list){
+  if(diffMode===2)return list;
+  if(diffMode===3){
+    const bpm = beatmap ? (beatmap.bpm || 120) : 120;
+    const offset = beatmap ? (beatmap.offset ?? 0.5) : 0.5;
+    const bi = 60.0 / bpm;
+    const eighth = bi / 2.0;
+    const sixteenth = bi / 4.0;
+
+    function getSeed(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash) || 9999;
+    }
+    const songName = beatmap ? (beatmap.song || "") : "";
+    let seed = getSeed(songName);
+    function random() {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    }
+
+    const roundT = (t) => Math.round(t * 1000) / 1000;
+
+    const longSpans = [];
+    for(const n of list){
+      if(n.type === 'long'){
+        longSpans.push({ start: n.time, end: n.time + n.duration, lane: n.lane });
+      }
+    }
+
+    function isLaneBusy(lane, t){
+      return longSpans.some(s => s.lane === lane && (t >= s.start - 0.02 && t <= s.end + 0.02));
+    }
+
+    const out = [];
+    const existing = new Set();
+
+    function addNote(t, lane, type, duration){
+      const rt = roundT(t);
+      const key = `${rt}_${lane}`;
+      if(!existing.has(key) && !isLaneBusy(lane, rt)){
+        const note = { time: rt, lane: lane };
+        if(type) note.type = type;
+        if(duration) note.duration = roundT(duration);
+        out.push(note);
+        existing.add(key);
+        return true;
+      }
+      return false;
+    }
+
+    for(const n of list){
+      const rt = roundT(n.time);
+      const key = `${rt}_${n.lane}`;
+      if(!existing.has(key)){
+        const note = { time: rt, lane: n.lane };
+        if(n.type) note.type = n.type;
+        if(n.duration) note.duration = roundT(n.duration);
+        out.push(note);
+        existing.add(key);
+      }
+    }
+
+    const sorted = [...list].sort((a, b) => a.time - b.time || a.lane - b.lane);
+
+    for(let i = 0; i < sorted.length; i++){
+      const n = sorted[i];
+
+      if(n.type === 'long'){
+        const steps = Math.floor(n.duration / eighth);
+        for(let s = 1; s < steps; s++){
+          const t = n.time + s * eighth;
+          let freeLanes = [0,1,2,3].filter(l => l !== n.lane && !isLaneBusy(l, t));
+          if(freeLanes.length > 0){
+            const chosen = freeLanes[Math.floor(random() * freeLanes.length)];
+            addNote(t, chosen);
+          }
+        }
+      } else {
+        const beatNum = Math.round((n.time - offset) / eighth);
+        const isOnEighth = Math.abs((n.time - offset) - beatNum * eighth) < 0.05;
+
+        if(isOnEighth){
+          const isQuarter = beatNum % 2 === 0;
+          const numNotesNeeded = (isQuarter && random() < 0.5) ? 3 : (random() < 0.9 ? 2 : 1);
+          
+          let lanesAdded = [n.lane];
+          for(let attempt = 0; attempt < 10; attempt++){
+            if(lanesAdded.length >= numNotesNeeded) break;
+            const l2 = Math.floor(random() * 4);
+            if(!lanesAdded.includes(l2)){
+              if(addNote(n.time, l2)) {
+                lanesAdded.push(l2);
+              }
+            }
+          }
+        }
+      }
+
+      if(i < sorted.length - 1){
+        const nextN = sorted[i+1];
+        const gap = nextN.time - n.time;
+
+        if(gap > eighth - 0.04 && gap < eighth + 0.04){
+          const midT = n.time + sixteenth;
+          let freeLanes = [0,1,2,3].filter(l => l !== n.lane && l !== nextN.lane && !isLaneBusy(l, midT));
+          if(freeLanes.length > 0){
+            const chosen = freeLanes[Math.floor(random() * freeLanes.length)];
+            addNote(midT, chosen);
+          }
+        }
+        else if(gap > bi - 0.04 && gap < bi + 0.04){
+          const t1 = n.time + sixteenth;
+          const t2 = n.time + sixteenth * 3;
+          
+          [t1, t2].forEach(t => {
+            let freeLanes = [0,1,2,3].filter(l => !isLaneBusy(l, t));
+            if(freeLanes.length > 0){
+              const chosen = freeLanes[Math.floor(random() * freeLanes.length)];
+              addNote(t, chosen);
+            }
+          });
+        }
+      }
+    }
+
+    // 마무리: 같은 레인 초근접(<0.15s) 정리 — 물리적으로 못 치는 겹침만 제거, 원 채보 노트 우선
+    const baseKeys = new Set(list.map(n => `${roundT(n.time)}_${n.lane}`));
+    const sortedOut = out.sort((a, b) => a.time - b.time || a.lane - b.lane);
+    const final = [];
+    const lastIdx = [-1, -1, -1, -1];
+    for(const n of sortedOut){
+      const li = lastIdx[n.lane];
+      if(li >= 0 && final[li]){
+        const prev = final[li];
+        const prevEnd = prev.type === 'long' ? prev.time + prev.duration : prev.time;
+        if(n.time - prevEnd < 0.15){
+          const nBase = baseKeys.has(`${n.time}_${n.lane}`);
+          const pBase = baseKeys.has(`${prev.time}_${prev.lane}`);
+          if(nBase && !pBase){ final[li] = null; }   // 추가 노트를 빼고 원 채보 노트 채택
+          else if(!nBase){ continue; }               // 추가 노트 스킵
+        }
+      }
+      final.push(n);
+      lastIdx[n.lane] = final.length - 1;
+    }
+    return final.filter(Boolean);
+  }
+  const minGap=diffMode===1?0.28:0.5;
+  const out=[];let lastT=-9,lastChord=-9;
+  for(const n of list){
+    if(out.length&&Math.abs(n.time-lastT)<0.001){
+      if(diffMode===1&&n.time-lastChord>2.0){out.push(n);lastChord=n.time}
+      continue;
+    }
+    if(n.time-lastT<minGap)continue;
+    out.push(n);lastT=n.time;
+  }
+  return out;
+}
+
+// ===== GAME LOGIC =====
+function initGame(){
+  score=0;combo=0;maxCombo=0;
+  judgements={perfect:0,great:0,good:0,miss:0};
+  keyState={};holdNotes={};
+  notes=[];
+  el.lanes.forEach(l=>{l.querySelectorAll('.note').forEach(n=>n.remove())});
+  el.touchKeys.innerHTML='';
+  el.score.textContent='0';el.combo.textContent='';
+  el.progress.style.width='0%';el.judgment.className='';
+
+  // build notes
+  for(const n of applyDifficulty(beatmap.notes)){
+    notes.push({
+      id:notes.length, time:n.time, lane:n.lane,
+      type:n.type||'short', duration:n.duration||0,
+      hit:false, missed:false, held:false, el:null
+    });
+  }
+
+  // build touch keys
+  [0,1,2,3].forEach(i=>{
+    const d=document.createElement('div');d.className='touch-key';d.dataset.lane=i;
+    el.touchKeys.appendChild(d);
+  });
+}
+
+function spawnNote(note){
+  const lane=el.lanes[note.lane];
+  const d=document.createElement('div');
+  const type=note.type==='long'?'long':'short';
+  d.className=`note ${type}`;
+  d.innerHTML='<div class="note-inner"></div>';
+  d.style.top='0px';d.dataset.id=note.id;
+  note.el=d;
+  lane.appendChild(d);
+}
+
+// long note spawn helper (create visual during playback)
+function renderLongNote(note){
+  if(!note.el)return;
+  const laneEl=el.lanes[note.lane];
+  const jy=laneEl.clientHeight-80;
+  const elapsed=(audioCtx.currentTime-startTime)+(globalOffset/1000);
+  const timeToEnd=note.time+note.duration;
+  const pixelEnd=jy-((timeToEnd-elapsed)*noteSpeed);   // 꼬리(위쪽, y 작음)
+  let pixelStart=jy-((note.time-elapsed)*noteSpeed);   // 머리(아래쪽, y 큼)
+  if(note.held)pixelStart=Math.min(pixelStart,jy);     // 홀드 중: 아래끝을 판정선에 고정 → 소모된 만큼 아래부터 줄어듦
+  const h=pixelStart-pixelEnd;
+  note.el.style.top=(pixelEnd-10)+'px';
+  note.el.style.height=Math.max(h,note.held?0:20)+'px';
+}
+
+function judgeNote(note,timeDiff){
+  const ad=Math.abs(timeDiff);
+  let j;
+  if(ad<=0.06){j='perfect';score+=1000+combo*50}
+  else if(ad<=0.13){j='great';score+=500+combo*30}
+  else if(ad<=0.22){j='good';score+=200+combo*10}
+  else return null;
+
+  judgements[j]++;combo++;
+  if(combo>maxCombo)maxCombo=combo;
+  note.hit=true;
+
+  if(note.type==='long'){
+    // start holding
+    note.held=true;
+    holdNotes[note.lane]={noteId:note.id,heldTime:note.time,releaseTime:note.time+note.duration};
+  }
+
+  if(note.el){
+    if(note.type!=='long'){note.el.remove();note.el=null}
+    else{note.el.classList.add('held')}
+  }
+  showJudgment(j);updateHUD();flashLane(note.lane);
+  return j;
+}
+
+function releaseLongNote(lane){
+  const hn=holdNotes[lane];
+  if(!hn)return;
+  const note=notes.find(n=>n.id===hn.noteId);
+  if(!note)return;
+
+  // bonus for holding
+  score+=300;
+  note.held=false;
+  if(note.el){note.el.remove();note.el=null}
+  delete holdNotes[lane];
+  updateHUD();
+}
+
+// called on manual key/touch release.
+// 머리는 이미 성공적으로 판정됐으므로(콤보/점수 반영 완료),
+// 끝까지 홀드하면 보너스, 일찍 떼면 보너스만 없을 뿐 미스/콤보 리셋은 없음(관대 처리).
+function tryReleaseLongNote(lane){
+  const hn=holdNotes[lane];
+  if(!hn)return;
+  const note=notes.find(n=>n.id===hn.noteId);
+  if(!note)return;
+  const elapsed=(audioCtx.currentTime-startTime)+(globalOffset/1000);
+  if(elapsed>=hn.releaseTime-0.15){
+    releaseLongNote(lane); // 충분히 홀드 → +300 보너스
+  }else{
+    // 일찍 뗌: 보너스 없이 그냥 종료(미스 아님, 콤보 유지)
+    note.held=false;
+    if(note.el){note.el.remove();note.el=null}
+    delete holdNotes[lane];
+  }
+}
+
+function missNote(note,reason){
+  if(note.missed)return;
+
+  if(note.type==='long'&&note.held){
+    // early release
+    note.held=false;
+    note.missed=true;
+    if(note.el){note.el.remove();note.el=null}
+    delete holdNotes[note.lane];
+    judgements.miss++;combo=0;
+    updateHUD();
+    if(reason!=='silent')showJudgment('miss');
+    return;
+  }
+
+  if(note.hit)return;
+  note.missed=true;
+
+  judgements.miss++;combo=0;
+  if(note.el){note.el.style.opacity='0.2';setTimeout(()=>{if(note.el)note.el.remove()},150);note.el=null}
+  updateHUD();
+  if(reason!=='silent')showJudgment('miss');
+}
+
+function showJudgment(type){
+  const j=el.judgment;
+  j.className='show '+type;
+  const lb={perfect:'퍼펙트!',great:'그레잇!',good:'굿',miss:'미스...'};
+  j.textContent=lb[type]||'';
+  clearTimeout(window.jt);
+  window.jt=setTimeout(()=>j.className='',300);
+}
+
+function flashLane(i){
+  el.flashes[i].classList.add('active');
+  setTimeout(()=>el.flashes[i].classList.remove('active'),80);
+}
+
+function updateHUD(){
+  el.score.textContent=score.toLocaleString();
+  el.combo.textContent=combo>=2?`${combo} 콤보`:'';
+  const ms=globalOffset;
+  el.offsetDisplay.textContent=`${ms>=0?'+':''}${ms}ms`;
+  el.offsetDisplay.style.color=ms===0?'#888':'#ffd93d';
+  const sd=document.getElementById('speed-display');
+  if(sd)sd.textContent=(noteSpeed/400).toFixed(1)+'x';
+}
+
+function gameLoop(timestamp){
+  if(!isPlaying)return;
+  const elapsed=(audioCtx.currentTime-startTime)+(globalOffset/1000);
+  const dur=audioBuffer?audioBuffer.duration:beatmap.duration;
+  el.progress.style.width=Math.min(elapsed/dur*100,100)+'%';
+
+  // 디버그 인포
+  const td=document.getElementById('timing-debug');
+  if(td){
+    const upcoming=notes.filter(n=>!n.hit&&!n.missed&&n.time>elapsed&&n.time<elapsed+5).length;
+    const firstUp=notes.find(n=>!n.hit&&!n.missed);
+    td.textContent=`${elapsed.toFixed(2)}s | notes:${notes.filter(n=>!n.hit&&!n.missed).length} | next:${firstUp?(firstUp.time-elapsed).toFixed(2):'-'}s`;
+  }
+
+  const jy=el.lanes[0].clientHeight-80;
+
+  for(const note of notes){
+    if((note.hit&&!(note.type==='long'&&note.held))||note.missed)continue; // 홀드 중인 롱노트는 계속 렌더
+    const nd=note.time-elapsed;
+    const py=jy-(nd*noteSpeed);
+
+    if(py>jy+80&&!note.el)continue;
+    if(py<jy+120&&!note.el)spawnNote(note);
+
+    if(note.el){
+      if(note.type==='long')renderLongNote(note);
+      else note.el.style.top=(py-10)+'px';
+    }
+
+    // miss check
+    if(nd<-0.35&&!note.hit)missNote(note);
+  }
+
+  // check long note releases
+  for(const [lane,hn] of Object.entries(holdNotes)){
+    const note=notes.find(n=>n.id===hn.noteId);
+    if(!note||note.hit===false||note.missed)continue;
+    // auto-release at end
+    if(elapsed>hn.releaseTime+0.1){
+      releaseLongNote(parseInt(lane));
+    }
+  }
+
+  if(elapsed>=dur+0.5){endGame();return}
+  animFrameId=requestAnimationFrame(gameLoop);
+}
+
+// 물리 키 위치로 레인 판별 → 한/영 입력 모드와 무관하게 동작
+function laneFromEvent(e){
+  if(e.code&&e.code.startsWith('Key')){
+    const i=LANE_KEYS.indexOf(e.code.slice(3).toLowerCase());
+    if(i!==-1)return i;
+  }
+  return LANE_KEYS.indexOf((e.key||'').toLowerCase());
+}
+
+function handleKeyDown(e){
+  const k=e.key.toLowerCase();
+  if(k==='escape'){quitGame();return}
+  if(k==='['){globalOffset=Math.max(-500,globalOffset-50);updateHUD();e.preventDefault();return}
+  if(k===']'){globalOffset=Math.min(500,globalOffset+50);updateHUD();e.preventDefault();return}
+  if(k===','){noteSpeed=Math.max(200,noteSpeed-50);updateHUD();e.preventDefault();return}
+  if(k==='.'){noteSpeed=Math.min(800,noteSpeed+50);updateHUD();e.preventDefault();return}
+
+  const li=laneFromEvent(e);
+  if(li===-1||!isPlaying)return;
+  e.preventDefault();
+  const kk=LANE_KEYS[li];
+  if(keyState[kk])return;
+  keyState[kk]=true;
+
+  flashLane(li);
+  el.touchKeys.querySelector(`[data-lane="${li}"]`)?.classList.add('pressed');
+
+  // check if we're holding a long note on this lane
+  if(holdNotes[li])return; // already holding, don't register new tap
+
+  const elapsed=(audioCtx.currentTime-startTime)+(globalOffset/1000);
+  let closest=null,closestDiff=Infinity;
+
+  for(const note of notes){
+    if(note.hit||note.missed||note.lane!==li)continue;
+    const diff=note.time-elapsed;
+    if(diff<-0.4||diff>0.4)continue;
+    const ad=Math.abs(diff);
+    if(ad<closestDiff){closestDiff=ad;closest=note}
+  }
+
+  if(closest)judgeNote(closest,closestDiff);
+}
+
+function handleKeyUp(e){
+  const li=laneFromEvent(e);
+  if(li===-1)return;
+  keyState[LANE_KEYS[li]]=false;
+  el.touchKeys.querySelector(`[data-lane="${li}"]`)?.classList.remove('pressed');
+
+  // release long note
+  if(holdNotes[li])tryReleaseLongNote(li);
+}
+
+async function startGame(){
+  try{
+    if(!audioBuffer||isUploaded)await loadAudio();
+    if(!beatmap)await loadBeatmap();
+    if(audioCtx.state==='suspended')await audioCtx.resume();
+    initGame();
+    el.startScreen.style.display='none';
+    el.gameUI.style.display='block';
+    el.resultScreen.style.display='none';
+    setSkin(skinIdx);
+
+    const sn=isUploaded?SONGS[SONGS.length-1]:SONGS[selectedSong];
+    el.songTitle.textContent=sn.name;
+
+    source=audioCtx.createBufferSource();
+    gainNode=audioCtx.createGain();gainNode.gain.value=1.0;
+    source.buffer=audioBuffer;
+    source.connect(gainNode);gainNode.connect(audioCtx.destination);
+
+    isPlaying=true;
+    startTime=audioCtx.currentTime;
+    source.start(0);
+    animFrameId=requestAnimationFrame(gameLoop);
+
+    document.addEventListener('keydown',handleKeyDown);
+    document.addEventListener('keyup',handleKeyUp);
+  }catch(err){alert('오류: '+err.message)}
+}
+
+function endGame(){
+  isPlaying=false;
+  if(animFrameId)cancelAnimationFrame(animFrameId);
+  try{source?.stop()}catch(e){}
+
+  el.gameUI.style.display='none';
+  el.resultScreen.style.display='flex';
+
+  const total=Object.values(judgements).reduce((a,b)=>a+b,0);
+  const pr=total>0?judgements.perfect/total:0;
+  let grade,title;
+  if(pr>=0.9){grade='S';title='🎵 창팝 마스터!'}
+  else if(pr>=0.75){grade='A';title='👍 굿!'}
+  else if(pr>=0.6){grade='B';title='👌 나쁘지 않음'}
+  else if(pr>=0.4){grade='C';title='😅 분발하자'}
+  else{grade='F';title='💀 망했어요'}
+
+  el.grade.textContent=grade;
+  el.grade.className='grade grade-'+grade;
+  el.resultTitle.textContent=title;
+  const sn=isUploaded?SONGS[SONGS.length-1]:SONGS[selectedSong];
+  el.resultSongName.textContent=sn.name;
+  el.rScore.textContent=score.toLocaleString();
+  el.rCombo.textContent=maxCombo;
+  el.rPerfect.textContent=judgements.perfect;
+  el.rMiss.textContent=judgements.miss;
+
+  document.removeEventListener('keydown',handleKeyDown);
+  document.removeEventListener('keyup',handleKeyUp);
+}
+
+function quitGame(){
+  isPlaying=false;
+  if(animFrameId)cancelAnimationFrame(animFrameId);
+  try{source?.stop()}catch(e){}
+  document.removeEventListener('keydown',handleKeyDown);
+  document.removeEventListener('keyup',handleKeyUp);
+  goMenu();
+}
+
+function retryGame(){el.resultScreen.style.display='none';startGame()}
+function goMenu(){
+  el.resultScreen.style.display='none';
+  el.gameUI.style.display='none';
+  el.startScreen.style.display='flex';
+  document.getElementById('song-list-container').style.display='none';
+  renderSongList();
+}
+
+// ===== SKIN =====
+function setSkin(idx){
+  skinIdx=((idx%NOTE_SKINS.length)+NOTE_SKINS.length)%NOTE_SKINS.length;
+  localStorage.setItem('rhythm_skin',skinIdx);
+  el.skinBtn.textContent=`🎨 노트 | ${NOTE_SKINS[skinIdx]}`;
+  const ssb=document.getElementById('skin-select-btn');
+  if(ssb)ssb.textContent=`🎨 ${NOTE_SKINS[skinIdx]}`;
+  document.body.className=`skin-${skinIdx+1}`;
+}
+el.skinBtn.addEventListener('click',()=>setSkin(skinIdx+1));
+document.getElementById('skin-select-btn').addEventListener('click',()=>setSkin(skinIdx+1));
+
+// ===== TOUCH =====
+el.touchKeys.addEventListener('pointerdown',(e)=>{
+  const tk=e.target.closest('.touch-key');
+  if(!tk||!isPlaying)return;
+  const li=parseInt(tk.dataset.lane);
+  const key=LANE_KEYS[li];
+  if(keyState[key])return;
+  keyState[key]=true;
+  flashLane(li);
+  tk.classList.add('pressed');
+
+  if(holdNotes[li])return;
+  const elapsed=(audioCtx.currentTime-startTime)+(globalOffset/1000);
+  let closest=null,closestDiff=Infinity;
+  for(const note of notes){
+    if(note.hit||note.missed||note.lane!==li)continue;
+    const diff=note.time-elapsed;
+    if(diff<-0.4||diff>0.4)continue;
+    const ad=Math.abs(diff);
+    if(ad<closestDiff){closestDiff=ad;closest=note}
+  }
+  if(closest)judgeNote(closest,closestDiff);
+});
+el.touchKeys.addEventListener('pointerup',(e)=>{
+  const tk=e.target.closest('.touch-key');
+  if(!tk)return;
+  const li=parseInt(tk.dataset.lane);
+  keyState[LANE_KEYS[li]]=false;
+  tk.classList.remove('pressed');
+  if(holdNotes[li])tryReleaseLongNote(li);
+});
+
+// ===== KEYBINDING =====
+function renderKeybindModal(){
+  const list=document.getElementById('keybind-list');
+  const labels=['1P','2P','3P','4P'];
+  const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff'];
+  list.innerHTML=LANE_KEYS.map((k,i)=>`
+    <div class="keybind-item" data-lane="${i}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:6px;background:rgba(255,255,255,0.04);border-radius:8px;cursor:pointer">
+      <div style="width:28px;height:28px;border-radius:6px;background:${colors[i]};display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:0.85rem">${labels[i]}</div>
+      <div style="flex:1;font-size:1.1rem;font-weight:700;text-transform:uppercase">${k.toUpperCase()}</div>
+      <div style="font-size:0.7rem;color:#666">클릭 후 키 입력</div>
+    </div>
+  `).join('');
+  
+  list.querySelectorAll('.keybind-item').forEach(el=>{
+    el.addEventListener('click',function(){
+      const li=parseInt(this.dataset.lane);
+      this.style.border='2px solid #ffd93d';
+      this.style.background='rgba(255,215,61,0.1)';
+      const handler=(e2)=>{
+        const key=e2.key.toLowerCase();
+        if(key==='escape'){document.removeEventListener('keydown',handler);renderKeybindModal();return}
+        if(key.length===1&&key>='a'&&key<='z'){
+          const dupIdx=LANE_KEYS.indexOf(key);
+          if(dupIdx!==-1&&dupIdx!==li)LANE_KEYS[dupIdx]=LANE_KEYS[li]; // swap so no lane loses its key
+          LANE_KEYS[li]=key;
+          localStorage.setItem('rhythm_keys',JSON.stringify(LANE_KEYS));
+          updateKeyGuide();
+          document.removeEventListener('keydown',handler);
+          renderKeybindModal();
+        }
+      };
+      document.addEventListener('keydown',handler);
+    });
+  });
+}
+
+function updateKeyGuide(){
+  const guide=document.getElementById('key-guide');
+  if(!guide)return;
+  const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff'];
+  const labels=['1P','2P','3P','4P'];
+  guide.innerHTML=LANE_KEYS.map((k,i)=>`
+    <div class="key-guide-item">
+      <div class="key" style="background:${colors[i]};color:#000">${k.toUpperCase()}</div>
+      <div class="label">${labels[i]}</div>
+    </div>
+  `).join('');
+}
+
+// ===== KEYBIND MODAL EVENTS =====
+document.getElementById('keybind-btn').addEventListener('click',()=>{
+  document.getElementById('keybind-modal').style.display='flex';
+  renderKeybindModal();
+});
+document.getElementById('keybind-close').addEventListener('click',()=>{
+  document.getElementById('keybind-modal').style.display='none';
+});
+// click outside to close
+document.getElementById('keybind-modal').addEventListener('click',(e)=>{
+  if(e.target===document.getElementById('keybind-modal'))
+    document.getElementById('keybind-modal').style.display='none';
+});
+
+// ===== INIT =====
+el.startBtn.addEventListener('click',startGame);
+el.retryBtn.addEventListener('click',retryGame);
+el.menuBtn.addEventListener('click',goMenu);
+document.getElementById('quit-btn').addEventListener('click',quitGame);
+document.getElementById('song-select-btn').addEventListener('click',()=>{
+  const c=document.getElementById('song-list-container');
+  c.style.display=c.style.display==='none'?'block':'none';
+});
+document.getElementById('speed-btn').addEventListener('click',()=>{
+  const speeds=[200,300,400,500,600,700,800];
+  const idx=speeds.indexOf(noteSpeed);
+  noteSpeed=speeds[(idx+1)%speeds.length];
+  document.getElementById('speed-btn').textContent=`⚡ ${(noteSpeed/400).toFixed(1)}x`;
+});
+function setDiff(i){
+  diffMode=((i%DIFF_MODES.length)+DIFF_MODES.length)%DIFF_MODES.length;
+  localStorage.setItem('rhythm_diff',diffMode);
+  document.getElementById('diff-btn').textContent=`💀 ${DIFF_MODES[diffMode]}`;
+}
+document.getElementById('diff-btn').addEventListener('click',()=>setDiff(diffMode+1));
+setDiff(diffMode);
+renderSongList();
+updateKeyGuide();
+setSkin(skinIdx);
+
+// preload all beatmaps
+SONGS.forEach(s=>{if(s.bm)fetch(s.bm).then(r=>r.json()).then(b=>{beatmapCache[s.bm]=b;renderSongList()}).catch(()=>{})});
+console.log('🎵 창팝 리듬게임 v2 loaded!');
+</script>
+</body>
+</html>

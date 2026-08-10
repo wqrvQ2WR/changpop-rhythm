@@ -1,0 +1,1091 @@
+{
+  "song": "쌀 다 팜.mp3",
+  "bpm": 125,
+  "offset": 0,
+  "total_notes": 248,
+  "duration": 122.7,
+  "lanes": 4,
+  "lanes_keys": [
+    "D",
+    "F",
+    "J",
+    "K"
+  ],
+  "difficulty": "매우어려움",
+  "notes": [
+    {
+      "time": 0.72,
+      "lane": 2
+    },
+    {
+      "time": 0.96,
+      "lane": 2
+    },
+    {
+      "time": 1.68,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 2.88,
+      "lane": 3
+    },
+    {
+      "time": 3.36,
+      "lane": 1
+    },
+    {
+      "time": 3.6,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 4.32,
+      "lane": 1
+    },
+    {
+      "time": 4.56,
+      "lane": 2
+    },
+    {
+      "time": 4.8,
+      "lane": 2
+    },
+    {
+      "time": 5.52,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 6.48,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 7.44,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 8.4,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 9.12,
+      "lane": 1,
+      "type": "long",
+      "duration": 1.2
+    },
+    {
+      "time": 11.04,
+      "lane": 1
+    },
+    {
+      "time": 11.28,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 12.0,
+      "lane": 1
+    },
+    {
+      "time": 12.48,
+      "lane": 2
+    },
+    {
+      "time": 12.72,
+      "lane": 2
+    },
+    {
+      "time": 12.96,
+      "lane": 1,
+      "type": "long",
+      "duration": 1.2
+    },
+    {
+      "time": 14.16,
+      "lane": 3
+    },
+    {
+      "time": 14.88,
+      "lane": 1
+    },
+    {
+      "time": 15.12,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 16.08,
+      "lane": 1
+    },
+    {
+      "time": 16.32,
+      "lane": 1
+    },
+    {
+      "time": 17.04,
+      "lane": 0
+    },
+    {
+      "time": 17.04,
+      "lane": 2
+    },
+    {
+      "time": 17.28,
+      "lane": 2
+    },
+    {
+      "time": 18.0,
+      "lane": 3
+    },
+    {
+      "time": 18.48,
+      "lane": 3
+    },
+    {
+      "time": 18.72,
+      "lane": 2
+    },
+    {
+      "time": 18.96,
+      "lane": 0
+    },
+    {
+      "time": 18.96,
+      "lane": 2
+    },
+    {
+      "time": 19.2,
+      "lane": 0
+    },
+    {
+      "time": 20.16,
+      "lane": 1
+    },
+    {
+      "time": 20.88,
+      "lane": 0
+    },
+    {
+      "time": 20.88,
+      "lane": 2
+    },
+    {
+      "time": 21.6,
+      "lane": 2
+    },
+    {
+      "time": 21.84,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 22.56,
+      "lane": 2
+    },
+    {
+      "time": 22.8,
+      "lane": 0
+    },
+    {
+      "time": 23.04,
+      "lane": 0
+    },
+    {
+      "time": 23.04,
+      "lane": 2
+    },
+    {
+      "time": 23.28,
+      "lane": 1
+    },
+    {
+      "time": 24.48,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 25.68,
+      "lane": 3
+    },
+    {
+      "time": 26.16,
+      "lane": 3
+    },
+    {
+      "time": 26.64,
+      "lane": 0
+    },
+    {
+      "time": 26.88,
+      "lane": 0
+    },
+    {
+      "time": 26.88,
+      "lane": 2
+    },
+    {
+      "time": 27.12,
+      "lane": 1
+    },
+    {
+      "time": 27.36,
+      "lane": 2
+    },
+    {
+      "time": 27.6,
+      "lane": 1
+    },
+    {
+      "time": 27.84,
+      "lane": 1
+    },
+    {
+      "time": 28.56,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 29.76,
+      "lane": 3
+    },
+    {
+      "time": 30.0,
+      "lane": 3
+    },
+    {
+      "time": 30.48,
+      "lane": 0
+    },
+    {
+      "time": 30.72,
+      "lane": 1
+    },
+    {
+      "time": 30.72,
+      "lane": 3
+    },
+    {
+      "time": 30.96,
+      "lane": 3
+    },
+    {
+      "time": 31.44,
+      "lane": 2
+    },
+    {
+      "time": 31.68,
+      "lane": 2
+    },
+    {
+      "time": 32.4,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 33.36,
+      "lane": 0
+    },
+    {
+      "time": 33.6,
+      "lane": 0
+    },
+    {
+      "time": 33.84,
+      "lane": 2
+    },
+    {
+      "time": 34.08,
+      "lane": 1
+    },
+    {
+      "time": 34.32,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 35.28,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 36.0,
+      "lane": 1
+    },
+    {
+      "time": 36.96,
+      "lane": 1
+    },
+    {
+      "time": 37.44,
+      "lane": 0
+    },
+    {
+      "time": 37.68,
+      "lane": 0
+    },
+    {
+      "time": 37.92,
+      "lane": 1
+    },
+    {
+      "time": 38.4,
+      "lane": 1
+    },
+    {
+      "time": 38.4,
+      "lane": 3
+    },
+    {
+      "time": 38.88,
+      "lane": 1
+    },
+    {
+      "time": 39.12,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 39.84,
+      "lane": 1
+    },
+    {
+      "time": 40.08,
+      "lane": 1
+    },
+    {
+      "time": 41.52,
+      "lane": 2
+    },
+    {
+      "time": 41.76,
+      "lane": 1
+    },
+    {
+      "time": 42.0,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 43.2,
+      "lane": 2
+    },
+    {
+      "time": 43.92,
+      "lane": 1
+    },
+    {
+      "time": 43.92,
+      "lane": 3
+    },
+    {
+      "time": 44.16,
+      "lane": 1
+    },
+    {
+      "time": 45.12,
+      "lane": 0
+    },
+    {
+      "time": 45.6,
+      "lane": 1
+    },
+    {
+      "time": 45.84,
+      "lane": 1
+    },
+    {
+      "time": 45.84,
+      "lane": 3
+    },
+    {
+      "time": 46.08,
+      "lane": 0
+    },
+    {
+      "time": 46.56,
+      "lane": 1
+    },
+    {
+      "time": 48.0,
+      "lane": 1
+    },
+    {
+      "time": 48.0,
+      "lane": 3
+    },
+    {
+      "time": 48.24,
+      "lane": 3
+    },
+    {
+      "time": 48.48,
+      "lane": 1
+    },
+    {
+      "time": 48.96,
+      "lane": 2
+    },
+    {
+      "time": 49.68,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 50.64,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 51.36,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 52.56,
+      "lane": 2
+    },
+    {
+      "time": 53.04,
+      "lane": 2
+    },
+    {
+      "time": 53.76,
+      "lane": 0
+    },
+    {
+      "time": 54.0,
+      "lane": 0
+    },
+    {
+      "time": 54.0,
+      "lane": 2
+    },
+    {
+      "time": 54.24,
+      "lane": 1
+    },
+    {
+      "time": 54.48,
+      "lane": 3
+    },
+    {
+      "time": 54.72,
+      "lane": 3
+    },
+    {
+      "time": 55.44,
+      "lane": 1
+    },
+    {
+      "time": 55.68,
+      "lane": 1
+    },
+    {
+      "time": 55.68,
+      "lane": 3
+    },
+    {
+      "time": 55.92,
+      "lane": 3
+    },
+    {
+      "time": 56.16,
+      "lane": 1
+    },
+    {
+      "time": 56.4,
+      "lane": 2
+    },
+    {
+      "time": 56.64,
+      "lane": 2
+    },
+    {
+      "time": 56.88,
+      "lane": 3
+    },
+    {
+      "time": 57.12,
+      "lane": 1
+    },
+    {
+      "time": 58.08,
+      "lane": 1
+    },
+    {
+      "time": 58.32,
+      "lane": 3
+    },
+    {
+      "time": 58.56,
+      "lane": 3
+    },
+    {
+      "time": 59.76,
+      "lane": 1
+    },
+    {
+      "time": 60.0,
+      "lane": 1
+    },
+    {
+      "time": 60.24,
+      "lane": 2
+    },
+    {
+      "time": 60.48,
+      "lane": 2
+    },
+    {
+      "time": 60.96,
+      "lane": 1
+    },
+    {
+      "time": 61.2,
+      "lane": 0
+    },
+    {
+      "time": 61.2,
+      "lane": 2
+    },
+    {
+      "time": 61.44,
+      "lane": 2
+    },
+    {
+      "time": 61.68,
+      "lane": 0
+    },
+    {
+      "time": 61.68,
+      "lane": 2
+    },
+    {
+      "time": 61.92,
+      "lane": 3
+    },
+    {
+      "time": 62.16,
+      "lane": 0
+    },
+    {
+      "time": 62.4,
+      "lane": 0
+    },
+    {
+      "time": 63.12,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 64.32,
+      "lane": 1
+    },
+    {
+      "time": 64.56,
+      "lane": 1
+    },
+    {
+      "time": 64.8,
+      "lane": 3
+    },
+    {
+      "time": 65.04,
+      "lane": 2
+    },
+    {
+      "time": 65.28,
+      "lane": 0
+    },
+    {
+      "time": 65.28,
+      "lane": 2
+    },
+    {
+      "time": 65.76,
+      "lane": 3
+    },
+    {
+      "time": 66.24,
+      "lane": 0
+    },
+    {
+      "time": 66.48,
+      "lane": 0
+    },
+    {
+      "time": 66.72,
+      "lane": 3,
+      "type": "long",
+      "duration": 1.2
+    },
+    {
+      "time": 67.92,
+      "lane": 1
+    },
+    {
+      "time": 68.4,
+      "lane": 0
+    },
+    {
+      "time": 68.88,
+      "lane": 2
+    },
+    {
+      "time": 69.12,
+      "lane": 0
+    },
+    {
+      "time": 69.12,
+      "lane": 2
+    },
+    {
+      "time": 70.08,
+      "lane": 0
+    },
+    {
+      "time": 70.8,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 71.76,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 72.72,
+      "lane": 2
+    },
+    {
+      "time": 72.96,
+      "lane": 0
+    },
+    {
+      "time": 72.96,
+      "lane": 2
+    },
+    {
+      "time": 73.44,
+      "lane": 3
+    },
+    {
+      "time": 73.68,
+      "lane": 0
+    },
+    {
+      "time": 73.92,
+      "lane": 0
+    },
+    {
+      "time": 74.4,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 75.12,
+      "lane": 0
+    },
+    {
+      "time": 75.36,
+      "lane": 3
+    },
+    {
+      "time": 75.6,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 76.56,
+      "lane": 2
+    },
+    {
+      "time": 76.8,
+      "lane": 1
+    },
+    {
+      "time": 76.8,
+      "lane": 3
+    },
+    {
+      "time": 77.04,
+      "lane": 3
+    },
+    {
+      "time": 77.28,
+      "lane": 0
+    },
+    {
+      "time": 78.0,
+      "lane": 3
+    },
+    {
+      "time": 78.24,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 79.44,
+      "lane": 2
+    },
+    {
+      "time": 80.4,
+      "lane": 1
+    },
+    {
+      "time": 81.12,
+      "lane": 0
+    },
+    {
+      "time": 81.36,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 82.08,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 83.28,
+      "lane": 2
+    },
+    {
+      "time": 83.52,
+      "lane": 2
+    },
+    {
+      "time": 84.24,
+      "lane": 1
+    },
+    {
+      "time": 84.24,
+      "lane": 3
+    },
+    {
+      "time": 84.48,
+      "lane": 1
+    },
+    {
+      "time": 85.2,
+      "lane": 3
+    },
+    {
+      "time": 85.92,
+      "lane": 0,
+      "type": "long",
+      "duration": 1.2
+    },
+    {
+      "time": 87.12,
+      "lane": 2
+    },
+    {
+      "time": 87.36,
+      "lane": 2
+    },
+    {
+      "time": 87.84,
+      "lane": 0
+    },
+    {
+      "time": 88.08,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 88.8,
+      "lane": 0
+    },
+    {
+      "time": 89.04,
+      "lane": 3
+    },
+    {
+      "time": 89.76,
+      "lane": 0
+    },
+    {
+      "time": 90.48,
+      "lane": 3
+    },
+    {
+      "time": 90.72,
+      "lane": 0
+    },
+    {
+      "time": 90.96,
+      "lane": 2
+    },
+    {
+      "time": 91.44,
+      "lane": 2
+    },
+    {
+      "time": 91.68,
+      "lane": 0
+    },
+    {
+      "time": 91.92,
+      "lane": 1
+    },
+    {
+      "time": 91.92,
+      "lane": 3
+    },
+    {
+      "time": 92.4,
+      "lane": 2
+    },
+    {
+      "time": 93.84,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 94.8,
+      "lane": 3
+    },
+    {
+      "time": 95.28,
+      "lane": 3
+    },
+    {
+      "time": 95.76,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 96.48,
+      "lane": 1
+    },
+    {
+      "time": 96.72,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 97.44,
+      "lane": 1
+    },
+    {
+      "time": 99.6,
+      "lane": 0
+    },
+    {
+      "time": 100.08,
+      "lane": 0
+    },
+    {
+      "time": 100.08,
+      "lane": 2
+    },
+    {
+      "time": 100.32,
+      "lane": 1
+    },
+    {
+      "time": 100.56,
+      "lane": 2
+    },
+    {
+      "time": 100.8,
+      "lane": 2
+    },
+    {
+      "time": 101.28,
+      "lane": 1,
+      "type": "long",
+      "duration": 1.2
+    },
+    {
+      "time": 102.48,
+      "lane": 3
+    },
+    {
+      "time": 102.72,
+      "lane": 3
+    },
+    {
+      "time": 103.68,
+      "lane": 0
+    },
+    {
+      "time": 104.16,
+      "lane": 1
+    },
+    {
+      "time": 104.4,
+      "lane": 2
+    },
+    {
+      "time": 104.64,
+      "lane": 2
+    },
+    {
+      "time": 105.36,
+      "lane": 1
+    },
+    {
+      "time": 105.36,
+      "lane": 3
+    },
+    {
+      "time": 105.6,
+      "lane": 1
+    },
+    {
+      "time": 105.84,
+      "lane": 2
+    },
+    {
+      "time": 106.08,
+      "lane": 1
+    },
+    {
+      "time": 106.32,
+      "lane": 3
+    },
+    {
+      "time": 107.04,
+      "lane": 1
+    },
+    {
+      "time": 107.28,
+      "lane": 0
+    },
+    {
+      "time": 107.28,
+      "lane": 2
+    },
+    {
+      "time": 107.52,
+      "lane": 0
+    },
+    {
+      "time": 107.76,
+      "lane": 1
+    },
+    {
+      "time": 108.0,
+      "lane": 2
+    },
+    {
+      "time": 108.24,
+      "lane": 1,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 110.16,
+      "lane": 3,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 110.88,
+      "lane": 2
+    },
+    {
+      "time": 111.12,
+      "lane": 0
+    },
+    {
+      "time": 111.12,
+      "lane": 2
+    },
+    {
+      "time": 111.36,
+      "lane": 0
+    },
+    {
+      "time": 111.84,
+      "lane": 2
+    },
+    {
+      "time": 112.08,
+      "lane": 1
+    },
+    {
+      "time": 112.32,
+      "lane": 1
+    },
+    {
+      "time": 113.04,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 114.0,
+      "lane": 3
+    },
+    {
+      "time": 114.24,
+      "lane": 3
+    },
+    {
+      "time": 114.72,
+      "lane": 2
+    },
+    {
+      "time": 114.96,
+      "lane": 0,
+      "type": "long",
+      "duration": 0.72
+    },
+    {
+      "time": 115.92,
+      "lane": 1
+    },
+    {
+      "time": 116.16,
+      "lane": 1
+    },
+    {
+      "time": 116.64,
+      "lane": 2,
+      "type": "long",
+      "duration": 0.96
+    },
+    {
+      "time": 117.84,
+      "lane": 3
+    }
+  ]
+}

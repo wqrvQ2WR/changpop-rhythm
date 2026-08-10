@@ -1,0 +1,343 @@
+{
+  "song": "마쁘리(APT).mp3",
+  "bpm": 60,
+  "offset": 0,
+  "total_notes": 76,
+  "duration": 71.9,
+  "lanes": 4,
+  "lanes_keys": [
+    "D",
+    "F",
+    "J",
+    "K"
+  ],
+  "difficulty": "보통",
+  "notes": [
+    {
+      "time": 1.0,
+      "lane": 1
+    },
+    {
+      "time": 1.5,
+      "lane": 2,
+      "type": "long",
+      "duration": 1.5
+    },
+    {
+      "time": 3.5,
+      "lane": 1,
+      "type": "long",
+      "duration": 2.0
+    },
+    {
+      "time": 5.5,
+      "lane": 3
+    },
+    {
+      "time": 6.0,
+      "lane": 3
+    },
+    {
+      "time": 7.5,
+      "lane": 0
+    },
+    {
+      "time": 7.5,
+      "lane": 2
+    },
+    {
+      "time": 9.0,
+      "lane": 1
+    },
+    {
+      "time": 9.5,
+      "lane": 2
+    },
+    {
+      "time": 10.0,
+      "lane": 2
+    },
+    {
+      "time": 11.5,
+      "lane": 1,
+      "type": "long",
+      "duration": 2.0
+    },
+    {
+      "time": 13.5,
+      "lane": 3
+    },
+    {
+      "time": 14.0,
+      "lane": 3
+    },
+    {
+      "time": 15.0,
+      "lane": 1
+    },
+    {
+      "time": 15.5,
+      "lane": 0
+    },
+    {
+      "time": 17.0,
+      "lane": 1
+    },
+    {
+      "time": 18.0,
+      "lane": 2
+    },
+    {
+      "time": 19.0,
+      "lane": 1,
+      "type": "long",
+      "duration": 1.5
+    },
+    {
+      "time": 21.5,
+      "lane": 3
+    },
+    {
+      "time": 22.0,
+      "lane": 3
+    },
+    {
+      "time": 23.5,
+      "lane": 0
+    },
+    {
+      "time": 23.5,
+      "lane": 2
+    },
+    {
+      "time": 24.0,
+      "lane": 0
+    },
+    {
+      "time": 25.0,
+      "lane": 1
+    },
+    {
+      "time": 25.5,
+      "lane": 2
+    },
+    {
+      "time": 26.0,
+      "lane": 2
+    },
+    {
+      "time": 27.0,
+      "lane": 1,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 29.5,
+      "lane": 3
+    },
+    {
+      "time": 30.0,
+      "lane": 3
+    },
+    {
+      "time": 31.0,
+      "lane": 1
+    },
+    {
+      "time": 31.5,
+      "lane": 0
+    },
+    {
+      "time": 31.5,
+      "lane": 2
+    },
+    {
+      "time": 32.0,
+      "lane": 0
+    },
+    {
+      "time": 33.0,
+      "lane": 2
+    },
+    {
+      "time": 33.5,
+      "lane": 1
+    },
+    {
+      "time": 34.0,
+      "lane": 1
+    },
+    {
+      "time": 35.0,
+      "lane": 2,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 37.5,
+      "lane": 3
+    },
+    {
+      "time": 38.0,
+      "lane": 3
+    },
+    {
+      "time": 39.0,
+      "lane": 2
+    },
+    {
+      "time": 39.5,
+      "lane": 0
+    },
+    {
+      "time": 39.5,
+      "lane": 2
+    },
+    {
+      "time": 40.0,
+      "lane": 0
+    },
+    {
+      "time": 41.0,
+      "lane": 2
+    },
+    {
+      "time": 41.5,
+      "lane": 1
+    },
+    {
+      "time": 42.5,
+      "lane": 1
+    },
+    {
+      "time": 43.0,
+      "lane": 2,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 45.5,
+      "lane": 3
+    },
+    {
+      "time": 46.0,
+      "lane": 3
+    },
+    {
+      "time": 47.5,
+      "lane": 0
+    },
+    {
+      "time": 47.5,
+      "lane": 2
+    },
+    {
+      "time": 48.0,
+      "lane": 0
+    },
+    {
+      "time": 49.5,
+      "lane": 1,
+      "type": "long",
+      "duration": 1.5
+    },
+    {
+      "time": 51.0,
+      "lane": 2,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 53.5,
+      "lane": 3
+    },
+    {
+      "time": 54.0,
+      "lane": 3
+    },
+    {
+      "time": 55.0,
+      "lane": 2
+    },
+    {
+      "time": 55.5,
+      "lane": 0
+    },
+    {
+      "time": 55.5,
+      "lane": 2
+    },
+    {
+      "time": 56.0,
+      "lane": 0
+    },
+    {
+      "time": 57.0,
+      "lane": 2
+    },
+    {
+      "time": 57.5,
+      "lane": 1
+    },
+    {
+      "time": 58.0,
+      "lane": 1
+    },
+    {
+      "time": 59.0,
+      "lane": 2,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 61.5,
+      "lane": 3
+    },
+    {
+      "time": 62.0,
+      "lane": 3
+    },
+    {
+      "time": 63.0,
+      "lane": 2
+    },
+    {
+      "time": 63.5,
+      "lane": 0
+    },
+    {
+      "time": 63.5,
+      "lane": 2
+    },
+    {
+      "time": 64.0,
+      "lane": 3
+    },
+    {
+      "time": 65.0,
+      "lane": 1
+    },
+    {
+      "time": 65.5,
+      "lane": 2
+    },
+    {
+      "time": 66.0,
+      "lane": 2
+    },
+    {
+      "time": 67.0,
+      "lane": 1,
+      "type": "long",
+      "duration": 2.5
+    },
+    {
+      "time": 69.5,
+      "lane": 0
+    },
+    {
+      "time": 70.0,
+      "lane": 0
+    }
+  ]
+}
